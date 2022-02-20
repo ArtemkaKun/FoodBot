@@ -19,6 +19,15 @@ public class DBTests
 		Message = "test", 
 		StartTime = new TimeSpan(10, 0, 0)
 	};
+	
+	private readonly VotingParameters testVotingParameters = new()
+	{
+		ChatIdentifier = new DiscordChatIdentifier
+		{
+			ChannelID = 0, GuildID = 0
+		},
+		DurationInMinutes = 60
+	};
 
 	[OneTimeSetUp]
 	public void InitializeDB ()
@@ -51,6 +60,22 @@ public class DBTests
 		if (testDB.TryGetVotingStartParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingStartParameters? _) == false)
 		{
 			Assert.Pass();
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
+	
+	[Test]
+	public void AddVotingParameters_PresentAndValidInDB_True ()
+	{
+		testDB.AddVotingParameters(testVotingParameters);
+
+		if (testDB.TryGetVotingParametersByChatIdentifier(testVotingParameters.ChatIdentifier, out VotingParameters? parametersInDB) == true)
+		{
+			Assert.AreEqual(testVotingParameters, parametersInDB);
+			testDB.RemoveVotingParameters(testVotingParameters);
 		}
 		else
 		{
