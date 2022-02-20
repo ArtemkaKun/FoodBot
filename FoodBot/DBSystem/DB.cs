@@ -10,6 +10,7 @@ public class DB : DbContext
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;
 	private DbSet<VotingParameters> VotingParameters { get; init; } = null!;
+	private DbSet<VotingEndParameters> VotingEndParameters { get; init; } = null!;
 
 	protected override void OnConfiguring (DbContextOptionsBuilder options)
 	{
@@ -54,6 +55,25 @@ public class DB : DbContext
 	}
 	
 	public void RemoveVotingParameters (VotingParameters parameterToRemove)
+	{
+		Remove(parameterToRemove);
+		SaveChanges();
+	}
+	
+	public void AddVotingEndParameters (VotingEndParameters newVotingParameters)
+	{
+		Add(newVotingParameters);
+		SaveChanges();
+	}
+	
+	public bool TryGetVotingEndParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingEndParameters? foundParameters)
+	{
+		foundParameters = VotingEndParameters.SingleOrDefault(votingParameters => votingParameters.ChatIdentifier == chatID);
+
+		return foundParameters != null;
+	}
+	
+	public void RemoveVotingEndParameters (VotingEndParameters parameterToRemove)
 	{
 		Remove(parameterToRemove);
 		SaveChanges();
