@@ -11,16 +11,10 @@ public class DBTests
 {
 	private readonly DB testDB = new();
 
-	[SetUp]
+	[OneTimeSetUp]
 	public void InitializeDB ()
 	{
 		testDB.Initialize();
-	}
-
-	[TearDown]
-	public void RemoveDB ()
-	{
-		File.Delete("./data.db");
 	}
 
 	[Test]
@@ -38,9 +32,36 @@ public class DBTests
 
 		testDB.AddVotingStartParameters(testParameters);
 
-		if (testDB.TryGetVotingStartParametersByID(1, out VotingStartParameters? parametersInDB) == true)
+		if (testDB.TryGetVotingStartParametersByChatIdentifier(testParameters.ChatIdentifier, out VotingStartParameters? parametersInDB) == true)
 		{
 			Assert.AreEqual(testParameters, parametersInDB);
+			testDB.RemoveVotingStartParameters(testParameters);
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
+	
+	[Test]
+	public void AddVotingStartParametersAndThenRemove_NotPresentInDB_True ()
+	{
+		VotingStartParameters testParameters = new()
+		{
+			ChatIdentifier = new DiscordChatIdentifier
+			{
+				ChannelID = 0, GuildID = 0
+			},
+			Message = "test", 
+			StartTime = new TimeSpan(10, 0, 0)
+		};
+
+		testDB.AddVotingStartParameters(testParameters);
+		testDB.RemoveVotingStartParameters(testParameters);
+
+		if (testDB.TryGetVotingStartParametersByChatIdentifier(testParameters.ChatIdentifier, out VotingStartParameters? _) == false)
+		{
+			Assert.Pass();
 		}
 		else
 		{
