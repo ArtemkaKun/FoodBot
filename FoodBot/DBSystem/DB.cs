@@ -45,4 +45,17 @@ public class DB : DbContext
 		Add(newVotingParameters);
 		SaveChanges();
 	}
+	
+	public bool TryGetVotingParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingParameters? foundParameters)
+	{
+		foundParameters = VotingParameters.SingleOrDefault(votingParameters => votingParameters.ChatIdentifier == chatID);
+
+		return foundParameters != null;
+	}
+	
+	public void RemoveVotingParameters (VotingParameters parameterToRemove)
+	{
+		Remove(parameterToRemove);
+		SaveChanges();
+	}
 }
