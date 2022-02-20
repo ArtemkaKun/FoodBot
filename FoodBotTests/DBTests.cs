@@ -9,7 +9,8 @@ namespace FoodBotTests;
 public class DBTests
 {
 	private readonly DB testDB = new();
-	private readonly VotingStartParameters testParameters = new()
+	
+	private readonly VotingStartParameters testVotingStartParameters = new()
 	{
 		ChatIdentifier = new DiscordChatIdentifier
 		{
@@ -28,12 +29,12 @@ public class DBTests
 	[Test]
 	public void AddVotingStartParameters_PresentAndValidInDB_True ()
 	{
-		testDB.AddVotingStartParameters(testParameters);
+		testDB.AddVotingStartParameters(testVotingStartParameters);
 
-		if (testDB.TryGetVotingStartParametersByChatIdentifier(testParameters.ChatIdentifier, out VotingStartParameters? parametersInDB) == true)
+		if (testDB.TryGetVotingStartParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingStartParameters? parametersInDB) == true)
 		{
-			Assert.AreEqual(testParameters, parametersInDB);
-			testDB.RemoveVotingStartParameters(testParameters);
+			Assert.AreEqual(testVotingStartParameters, parametersInDB);
+			testDB.RemoveVotingStartParameters(testVotingStartParameters);
 		}
 		else
 		{
@@ -44,10 +45,10 @@ public class DBTests
 	[Test]
 	public void AddVotingStartParametersAndThenRemove_NotPresentInDB_True ()
 	{
-		testDB.AddVotingStartParameters(testParameters);
-		testDB.RemoveVotingStartParameters(testParameters);
+		testDB.AddVotingStartParameters(testVotingStartParameters);
+		testDB.RemoveVotingStartParameters(testVotingStartParameters);
 
-		if (testDB.TryGetVotingStartParametersByChatIdentifier(testParameters.ChatIdentifier, out VotingStartParameters? _) == false)
+		if (testDB.TryGetVotingStartParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingStartParameters? _) == false)
 		{
 			Assert.Pass();
 		}
