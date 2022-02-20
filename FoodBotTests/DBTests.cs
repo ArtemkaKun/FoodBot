@@ -82,4 +82,20 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
+	
+	[Test]
+	public void AddVotingParametersAndThenRemove_NotPresentInDB_True ()
+	{
+		testDB.AddVotingParameters(testVotingParameters);
+		testDB.RemoveVotingParameters(testVotingParameters);
+
+		if (testDB.TryGetVotingParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingParameters? _) == false)
+		{
+			Assert.Pass();
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
 }
