@@ -9,32 +9,24 @@ namespace FoodBotTests;
 public class DBTests
 {
 	private readonly DB testDB = new();
-	
+	private static readonly DiscordChatIdentifier TEST_CHAT_IDENTIFIER = new() {ChannelID = 0, GuildID = 0};
+
 	private readonly VotingStartParameters testVotingStartParameters = new()
 	{
-		ChatIdentifier = new DiscordChatIdentifier
-		{
-			ChannelID = 0, GuildID = 0
-		},
-		Message = "test", 
+		ChatIdentifier = TEST_CHAT_IDENTIFIER,
+		Message = "test",
 		StartTime = new TimeSpan(10, 0, 0)
 	};
-	
+
 	private readonly VotingParameters testVotingParameters = new()
 	{
-		ChatIdentifier = new DiscordChatIdentifier
-		{
-			ChannelID = 0, GuildID = 0
-		},
+		ChatIdentifier = TEST_CHAT_IDENTIFIER,
 		DurationInMinutes = 60
 	};
-	
+
 	private readonly VotingEndParameters testVotingEndParameters = new()
 	{
-		ChatIdentifier = new DiscordChatIdentifier
-		{
-			ChannelID = 0, GuildID = 0
-		},
+		ChatIdentifier = TEST_CHAT_IDENTIFIER,
 		Message = "testend"
 	};
 
@@ -59,7 +51,7 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
-	
+
 	[Test]
 	public void AddVotingStartParametersAndThenRemove_NotPresentInDB_True ()
 	{
@@ -75,7 +67,7 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
-	
+
 	[Test]
 	public void AddVotingParameters_PresentAndValidInDB_True ()
 	{
@@ -91,7 +83,7 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
-	
+
 	[Test]
 	public void AddVotingParametersAndThenRemove_NotPresentInDB_True ()
 	{
@@ -107,7 +99,7 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
-	
+
 	[Test]
 	public void AddVotingEndParameters_PresentAndValidInDB_True ()
 	{
@@ -123,7 +115,7 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
-	
+
 	[Test]
 	public void AddVotingEndParametersAndThenRemove_NotPresentInDB_True ()
 	{
