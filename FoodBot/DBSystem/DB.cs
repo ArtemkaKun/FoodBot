@@ -9,6 +9,7 @@ public class DB : DbContext
 	private const string PATH_TO_DB_FILE = @"Data Source=data.db";
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;
+	private DbSet<VotingParameters> VotingParameters { get; init; } = null!;
 
 	protected override void OnConfiguring (DbContextOptionsBuilder options)
 	{
@@ -36,6 +37,12 @@ public class DB : DbContext
 	public void RemoveVotingStartParameters (VotingStartParameters parameterToRemove)
 	{
 		Remove(parameterToRemove);
+		SaveChanges();
+	}
+	
+	public void AddVotingParameters (VotingParameters newVotingParameters)
+	{
+		Add(newVotingParameters);
 		SaveChanges();
 	}
 }
