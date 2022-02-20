@@ -123,4 +123,20 @@ public class DBTests
 			Assert.Fail();
 		}
 	}
+	
+	[Test]
+	public void AddVotingEndParametersAndThenRemove_NotPresentInDB_True ()
+	{
+		testDB.AddVotingEndParameters(testVotingEndParameters);
+		testDB.RemoveVotingEndParameters(testVotingEndParameters);
+
+		if (testDB.TryGetVotingEndParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingEndParameters? _) == false)
+		{
+			Assert.Pass();
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
 }
