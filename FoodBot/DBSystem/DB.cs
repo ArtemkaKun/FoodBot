@@ -1,4 +1,3 @@
-using System.Linq;
 using FoodBot.Shared;
 using FoodBot.VotingSystem;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +26,11 @@ public class DB : DbContext
 		SaveChanges();
 	}
 	
-	public bool TryGetVotingStartParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingStartParameters? foundedParameters)
+	public bool TryGetVotingStartParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingStartParameters? foundParameters)
 	{
-		foundedParameters = VotingStartParameters.SingleOrDefault(votingStartParameters => votingStartParameters.ChatIdentifier == chatID);
+		foundParameters = VotingStartParameters.SingleOrDefault(votingStartParameters => votingStartParameters.ChatIdentifier == chatID);
 
-		return foundedParameters != null;
+		return foundParameters != null;
 	}
 	
 	public void RemoveVotingStartParameters (VotingStartParameters parameterToRemove)
