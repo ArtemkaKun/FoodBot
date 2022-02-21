@@ -108,9 +108,16 @@ public class VotingSystemDB : DbContext
 		return foundParameters != null;
 	}
 	
-	public void RemoveVotingEndParameters (VotingEndParameters parameterToRemove)
+	public string? RemoveVotingEndParametersByChatIdentifier (DiscordChatIdentifier chatID)
 	{
-		Remove(parameterToRemove);
+		if (TryGetVotingEndParametersByChatIdentifier(chatID, out VotingEndParameters? foundParameters) == false)
+		{
+			return "No voting end parameters for this chat!";
+		}
+		
+		Remove(foundParameters);
 		SaveChanges();
+
+		return null;
 	}
 }

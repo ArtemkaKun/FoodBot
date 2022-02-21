@@ -108,7 +108,7 @@ public class VotingSystemDBTests
 		if (testVotingSystemDB.TryGetVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier, out VotingEndParameters? parametersInDB) == true)
 		{
 			Assert.AreEqual(testVotingEndParameters, parametersInDB);
-			testVotingSystemDB.RemoveVotingEndParameters(testVotingEndParameters);
+			testVotingSystemDB.RemoveVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier);
 		}
 		else
 		{
@@ -120,7 +120,7 @@ public class VotingSystemDBTests
 	public void AddVotingEndParametersAndThenRemove_NotPresentInDB_True ()
 	{
 		testVotingSystemDB.AddVotingEndParameters(testVotingEndParameters);
-		testVotingSystemDB.RemoveVotingEndParameters(testVotingEndParameters);
+		testVotingSystemDB.RemoveVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier);
 
 		if (testVotingSystemDB.TryGetVotingEndParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingEndParameters? _) == false)
 		{
@@ -136,7 +136,7 @@ public class VotingSystemDBTests
 	public void AddVotingStartParametersAndThenGetAll_PresentAndValidInDB_True ()
 	{
 		testVotingSystemDB.AddVotingEndParameters(testVotingEndParameters);
-		testVotingSystemDB.RemoveVotingEndParameters(testVotingEndParameters);
+		testVotingSystemDB.RemoveVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier);
 
 		if (testVotingSystemDB.TryGetVotingEndParametersByChatIdentifier(testVotingStartParameters.ChatIdentifier, out VotingEndParameters? _) == false)
 		{
@@ -191,7 +191,7 @@ public class VotingSystemDBTests
 		if (error is "Voting end parameters already exists for this chat!")
 		{
 			Assert.Pass();
-			testVotingSystemDB.RemoveVotingEndParameters(testVotingEndParameters);
+			testVotingSystemDB.RemoveVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier);
 		}
 		else
 		{
@@ -220,6 +220,21 @@ public class VotingSystemDBTests
 		string? error = testVotingSystemDB.RemoveVotingParametersByChatIdentifier(testVotingParameters.ChatIdentifier);
 
 		if (error is "No voting parameters for this chat!")
+		{
+			Assert.Pass();
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
+
+	[Test]
+	public void RemoveUnexistedVotingEndParameters_ErrorReturned_True ()
+	{
+		string? error = testVotingSystemDB.RemoveVotingEndParametersByChatIdentifier(testVotingEndParameters.ChatIdentifier);
+
+		if (error is "No voting end parameters for this chat!")
 		{
 			Assert.Pass();
 		}
