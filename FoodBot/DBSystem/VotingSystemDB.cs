@@ -9,7 +9,7 @@ public class VotingSystemDB : DbContext
 	private const string PATH_TO_DB_FILE = @"Data Source=VotingData.db";
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;
-	private DbSet<VotingParameters> VotingParameters { get; init; } = null!;
+	private DbSet<VotingMainParameters> VotingMainParameters { get; init; } = null!;
 	private DbSet<VotingEndParameters> VotingEndParameters { get; init; } = null!;
 
 	protected override void OnConfiguring (DbContextOptionsBuilder options)
@@ -55,31 +55,36 @@ public class VotingSystemDB : DbContext
 		return null;
 	}
 
-	public string? AddVotingParameters (VotingParameters newVotingParameters)
+	// public IReadOnlyList<VotingStartParameters> GetAllVotingStartParameters ()
+	// {
+	// 	return 
+	// }
+
+	public string? AddVotingMainParameters (VotingMainParameters newVotingMainParameters)
 	{
-		if (TryGetVotingParametersByChatIdentifier(newVotingParameters.ChatIdentifier, out _) == true)
+		if (TryGetVotingMainParametersByChatIdentifier(newVotingMainParameters.ChatIdentifier, out _) == true)
 		{
-			return "Voting parameters already exists for this chat!";
+			return "Voting main parameters already exists for this chat!";
 		}
 
-		Add(newVotingParameters);
+		Add(newVotingMainParameters);
 		SaveChanges();
 
 		return null;
 	}
 
-	public bool TryGetVotingParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingParameters? foundParameters)
+	public bool TryGetVotingMainParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingMainParameters? foundParameters)
 	{
-		foundParameters = VotingParameters.SingleOrDefault(votingParameters => votingParameters.ChatIdentifier == chatID);
+		foundParameters = VotingMainParameters.SingleOrDefault(votingMainParameters => votingMainParameters.ChatIdentifier == chatID);
 
 		return foundParameters != null;
 	}
 
-	public string? RemoveVotingParametersByChatIdentifier (DiscordChatIdentifier chatID)
+	public string? RemoveVotingMainParametersByChatIdentifier (DiscordChatIdentifier chatID)
 	{
-		if (TryGetVotingParametersByChatIdentifier(chatID, out VotingParameters? foundParameters) == false)
+		if (TryGetVotingMainParametersByChatIdentifier(chatID, out VotingMainParameters? foundParameters) == false)
 		{
-			return "No voting parameters for this chat!";
+			return "No voting main parameters for this chat!";
 		}
 
 		Remove(foundParameters);
