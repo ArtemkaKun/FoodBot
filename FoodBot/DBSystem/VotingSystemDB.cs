@@ -24,7 +24,7 @@ public class VotingSystemDB : DbContext
 
 	public string? AddVotingStartParameters (VotingStartParameters newVotingStartParameters)
 	{
-		if (TryGetVotingStartParametersByChatIdentifier(newVotingStartParameters.ChatIdentifier, out VotingStartParameters? _) == true)
+		if (TryGetVotingStartParametersByChatIdentifier(newVotingStartParameters.ChatIdentifier, out _) == true)
 		{
 			return "Voting start parameters already exists for this chat!";
 		}
@@ -48,10 +48,17 @@ public class VotingSystemDB : DbContext
 		SaveChanges();
 	}
 	
-	public void AddVotingParameters (VotingParameters newVotingParameters)
+	public string? AddVotingParameters (VotingParameters newVotingParameters)
 	{
+		if (TryGetVotingParametersByChatIdentifier(newVotingParameters.ChatIdentifier, out _) == true)
+		{
+			return "Voting parameters already exists for this chat!";
+		}
+		
 		Add(newVotingParameters);
 		SaveChanges();
+		
+		return null;
 	}
 	
 	public bool TryGetVotingParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingParameters? foundParameters)

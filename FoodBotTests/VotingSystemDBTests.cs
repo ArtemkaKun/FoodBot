@@ -157,6 +157,24 @@ public class VotingSystemDBTests
 		if (error is "Voting start parameters already exists for this chat!")
 		{
 			Assert.Pass();
+			testVotingSystemDB.RemoveVotingStartParameters(testVotingStartParameters);
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
+	
+	[Test]
+	public void Add2VotingParametersWithSameChatIdentifier_ErrorReturned_True ()
+	{
+		testVotingSystemDB.AddVotingParameters(testVotingParameters);
+		string? error = testVotingSystemDB.AddVotingParameters(testVotingParameters);
+
+		if (error is "Voting parameters already exists for this chat!")
+		{
+			Assert.Pass();
+			testVotingSystemDB.RemoveVotingParameters(testVotingParameters);
 		}
 		else
 		{
