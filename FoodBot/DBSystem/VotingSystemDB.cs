@@ -42,10 +42,17 @@ public class VotingSystemDB : DbContext
 		return foundParameters != null;
 	}
 	
-	public void RemoveVotingStartParameters (VotingStartParameters parameterToRemove)
+	public string? RemoveVotingStartParametersByChatIdentifier (DiscordChatIdentifier chatID)
 	{
-		Remove(parameterToRemove);
+		if (TryGetVotingStartParametersByChatIdentifier(chatID, out VotingStartParameters? foundParameters) == false)
+		{
+			return "No voting start parameters for this chat!";
+		}
+		
+		Remove(foundParameters);
 		SaveChanges();
+
+		return null;
 	}
 	
 	public string? AddVotingParameters (VotingParameters newVotingParameters)
