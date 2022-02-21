@@ -147,4 +147,20 @@ public class VotingSystemDBTests
 			Assert.Fail();
 		}
 	}
+	
+	[Test]
+	public void Add2VotingStartParametersWithSameChatIdentifier_ErrorReturned_True ()
+	{
+		testVotingSystemDB.AddVotingStartParameters(testVotingStartParameters);
+		string? error = testVotingSystemDB.AddVotingStartParameters(testVotingStartParameters);
+
+		if (error is "Voting start parameters already exists for this chat!")
+		{
+			Assert.Pass();
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
 }
