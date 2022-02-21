@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodBot.DBSystem;
 
-public class DB : DbContext
+public class VotingSystemDB : DbContext
 {
-	private const string PATH_TO_DB_FILE = @"Data Source=data.db";
+	private const string PATH_TO_DB_FILE = @"Data Source=VotingData.db";
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;
 	private DbSet<VotingParameters> VotingParameters { get; init; } = null!;
