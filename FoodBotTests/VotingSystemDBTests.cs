@@ -181,4 +181,21 @@ public class VotingSystemDBTests
 			Assert.Fail();
 		}
 	}
+	
+	[Test]
+	public void Add2VotingEndParametersWithSameChatIdentifier_ErrorReturned_True ()
+	{
+		testVotingSystemDB.AddVotingEndParameters(testVotingEndParameters);
+		string? error = testVotingSystemDB.AddVotingEndParameters(testVotingEndParameters);
+
+		if (error is "Voting end parameters already exists for this chat!")
+		{
+			Assert.Pass();
+			testVotingSystemDB.RemoveVotingEndParameters(testVotingEndParameters);
+		}
+		else
+		{
+			Assert.Fail();
+		}
+	}
 }

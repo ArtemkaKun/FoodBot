@@ -74,10 +74,17 @@ public class VotingSystemDB : DbContext
 		SaveChanges();
 	}
 	
-	public void AddVotingEndParameters (VotingEndParameters newVotingParameters)
+	public string? AddVotingEndParameters (VotingEndParameters newVotingEndParameters)
 	{
-		Add(newVotingParameters);
+		if (TryGetVotingEndParametersByChatIdentifier(newVotingEndParameters.ChatIdentifier, out _) == true)
+		{
+			return "Voting end parameters already exists for this chat!";
+		}
+		
+		Add(newVotingEndParameters);
 		SaveChanges();
+
+		return null;
 	}
 	
 	public bool TryGetVotingEndParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingEndParameters? foundParameters)
