@@ -1,4 +1,3 @@
-using FoodBot.Shared;
 using FoodBot.VotingSystem;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +23,7 @@ public class VotingSystemDB : DbContext
 
 	public string? AddVotingStartParameters (VotingStartParameters newVotingStartParameters)
 	{
-		if (TryGetVotingStartParametersByChatIdentifier(newVotingStartParameters.ChatIdentifier, out _) == true)
+		if (TryGetVotingStartParametersByChatIdentifier(newVotingStartParameters.GuildID, newVotingStartParameters.ChannelID, out _) == true)
 		{
 			return "Voting start parameters already exists for this chat!";
 		}
@@ -35,16 +34,16 @@ public class VotingSystemDB : DbContext
 		return null;
 	}
 
-	public bool TryGetVotingStartParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingStartParameters? foundParameters)
+	public bool TryGetVotingStartParametersByChatIdentifier (ulong guildID, ulong channelID, out VotingStartParameters? foundParameters)
 	{
-		foundParameters = VotingStartParameters.SingleOrDefault(votingStartParameters => votingStartParameters.ChatIdentifier == chatID);
+		foundParameters = VotingStartParameters.SingleOrDefault(votingStartParameters => votingStartParameters.GuildID == guildID && votingStartParameters.ChannelID == channelID);
 
 		return foundParameters != null;
 	}
 
-	public string? RemoveVotingStartParametersByChatIdentifier (DiscordChatIdentifier chatID)
+	public string? RemoveVotingStartParametersByChatIdentifier (ulong guildID, ulong channelID)
 	{
-		if (TryGetVotingStartParametersByChatIdentifier(chatID, out VotingStartParameters? foundParameters) == false)
+		if (TryGetVotingStartParametersByChatIdentifier(guildID, channelID, out VotingStartParameters? foundParameters) == false)
 		{
 			return "No voting start parameters for this chat!";
 		}
@@ -55,14 +54,9 @@ public class VotingSystemDB : DbContext
 		return null;
 	}
 
-	// public IReadOnlyList<VotingStartParameters> GetAllVotingStartParameters ()
-	// {
-	// 	return 
-	// }
-
 	public string? AddVotingMainParameters (VotingMainParameters newVotingMainParameters)
 	{
-		if (TryGetVotingMainParametersByChatIdentifier(newVotingMainParameters.ChatIdentifier, out _) == true)
+		if (TryGetVotingMainParametersByChatIdentifier(newVotingMainParameters.GuildID, newVotingMainParameters.ChannelID, out _) == true)
 		{
 			return "Voting main parameters already exists for this chat!";
 		}
@@ -73,16 +67,16 @@ public class VotingSystemDB : DbContext
 		return null;
 	}
 
-	public bool TryGetVotingMainParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingMainParameters? foundParameters)
+	public bool TryGetVotingMainParametersByChatIdentifier (ulong guildID, ulong channelID, out VotingMainParameters? foundParameters)
 	{
-		foundParameters = VotingMainParameters.SingleOrDefault(votingMainParameters => votingMainParameters.ChatIdentifier == chatID);
+		foundParameters = VotingMainParameters.SingleOrDefault(votingMainParameters => votingMainParameters.GuildID == guildID && votingMainParameters.ChannelID == channelID);
 
 		return foundParameters != null;
 	}
 
-	public string? RemoveVotingMainParametersByChatIdentifier (DiscordChatIdentifier chatID)
+	public string? RemoveVotingMainParametersByChatIdentifier (ulong guildID, ulong channelID)
 	{
-		if (TryGetVotingMainParametersByChatIdentifier(chatID, out VotingMainParameters? foundParameters) == false)
+		if (TryGetVotingMainParametersByChatIdentifier(guildID, channelID, out VotingMainParameters? foundParameters) == false)
 		{
 			return "No voting main parameters for this chat!";
 		}
@@ -95,7 +89,7 @@ public class VotingSystemDB : DbContext
 
 	public string? AddVotingEndParameters (VotingEndParameters newVotingEndParameters)
 	{
-		if (TryGetVotingEndParametersByChatIdentifier(newVotingEndParameters.ChatIdentifier, out _) == true)
+		if (TryGetVotingEndParametersByChatIdentifier(newVotingEndParameters.GuildID, newVotingEndParameters.ChannelID, out _) == true)
 		{
 			return "Voting end parameters already exists for this chat!";
 		}
@@ -106,16 +100,16 @@ public class VotingSystemDB : DbContext
 		return null;
 	}
 
-	public bool TryGetVotingEndParametersByChatIdentifier (DiscordChatIdentifier chatID, out VotingEndParameters? foundParameters)
+	public bool TryGetVotingEndParametersByChatIdentifier (ulong guildID, ulong channelID, out VotingEndParameters? foundParameters)
 	{
-		foundParameters = VotingEndParameters.SingleOrDefault(votingParameters => votingParameters.ChatIdentifier == chatID);
+		foundParameters = VotingEndParameters.SingleOrDefault(votingParameters => votingParameters.GuildID == guildID && votingParameters.ChannelID == channelID);
 
 		return foundParameters != null;
 	}
 
-	public string? RemoveVotingEndParametersByChatIdentifier (DiscordChatIdentifier chatID)
+	public string? RemoveVotingEndParametersByChatIdentifier (ulong guildID, ulong channelID)
 	{
-		if (TryGetVotingEndParametersByChatIdentifier(chatID, out VotingEndParameters? foundParameters) == false)
+		if (TryGetVotingEndParametersByChatIdentifier(guildID, channelID, out VotingEndParameters? foundParameters) == false)
 		{
 			return "No voting end parameters for this chat!";
 		}
@@ -124,5 +118,20 @@ public class VotingSystemDB : DbContext
 		SaveChanges();
 
 		return null;
+	}
+
+	public IReadOnlyList<VotingParameters> GetAllVotingParameters ()
+	{
+		List<VotingParameters> votingParameters = new();
+
+		foreach (VotingStartParameters votingStartParameters in VotingStartParameters)
+		{
+			if (TryGetVotingMainParametersByChatIdentifier(votingStartParameters.GuildID, votingStartParameters.ChannelID, out VotingMainParameters? foundMainParameters) == true && TryGetVotingEndParametersByChatIdentifier(votingStartParameters.GuildID, votingStartParameters.ChannelID, out VotingEndParameters? foundEndParameters) == true)
+			{
+				votingParameters.Add(new VotingParameters(votingStartParameters, foundMainParameters!, foundEndParameters!));
+			}
+		}
+
+		return votingParameters;
 	}
 }
