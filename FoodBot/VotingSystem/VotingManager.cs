@@ -20,7 +20,7 @@ public class VotingManager
 		}
 	}
 
-	public void ReactOnVotingParametersUpdated (IReadOnlyList<VotingParameters> votingParametersList)
+	public void ReactOnVotingParametersChanged (IReadOnlyList<VotingParameters> votingParametersList)
 	{
 		VotingThreadsCancellationToken.Cancel();
 		VotingThreadsCancellationToken.Dispose();
