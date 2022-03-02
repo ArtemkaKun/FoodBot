@@ -20,6 +20,15 @@ public class VotingManager
 		}
 	}
 
+	public void ReactOnVotingParametersUpdated (IReadOnlyList<VotingParameters> votingParametersList)
+	{
+		VotingThreadsCancellationToken.Cancel();
+		VotingThreadsCancellationToken.Dispose();
+		
+		VotingParametersList = votingParametersList;
+		StartVotingThreads();
+	}
+
 	private async Task DoVotingProcess (VotingParameters parameters, CancellationToken cancellationToken)
 	{
 		TimeSpan currentTime = DateTime.Now.TimeOfDay;
