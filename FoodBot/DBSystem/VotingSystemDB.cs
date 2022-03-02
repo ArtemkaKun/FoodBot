@@ -5,6 +5,8 @@ namespace FoodBot.DBSystem;
 
 public class VotingSystemDB : DbContext
 {
+	public event Action<IReadOnlyList<VotingParameters>>? OnVotingParametersChanged;
+	
 	private const string PATH_TO_DB_FILE = @"Data Source=VotingData.db";
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;
@@ -30,6 +32,7 @@ public class VotingSystemDB : DbContext
 
 		Add(newVotingStartParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
@@ -50,6 +53,7 @@ public class VotingSystemDB : DbContext
 
 		Remove(foundParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
@@ -63,6 +67,7 @@ public class VotingSystemDB : DbContext
 
 		Add(newVotingMainParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
@@ -83,6 +88,7 @@ public class VotingSystemDB : DbContext
 
 		Remove(foundParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
@@ -96,6 +102,7 @@ public class VotingSystemDB : DbContext
 
 		Add(newVotingEndParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
@@ -116,6 +123,7 @@ public class VotingSystemDB : DbContext
 
 		Remove(foundParameters);
 		SaveChanges();
+		OnVotingParametersChanged?.Invoke(GetAllVotingParameters());
 
 		return null;
 	}
