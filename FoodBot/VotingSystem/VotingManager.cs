@@ -1,3 +1,5 @@
+using FoodBot.DBSystem;
+
 namespace FoodBot.VotingSystem;
 
 public class VotingManager
@@ -5,9 +7,10 @@ public class VotingManager
 	private IReadOnlyList<VotingParameters> VotingParametersList { get; set; }
 	private CancellationTokenSource VotingThreadsCancellationToken { get; set; } = null!;
 
-	public VotingManager (IReadOnlyList<VotingParameters> votingParametersList)
+	public VotingManager (VotingSystemDB votingDB)
 	{
-		VotingParametersList = votingParametersList;
+		VotingParametersList = votingDB.GetAllVotingParameters();
+		votingDB.OnVotingParametersChanged += ReactOnVotingParametersChanged;
 	}
 
 	public void StartVotingThreads ()
@@ -20,7 +23,7 @@ public class VotingManager
 		}
 	}
 
-	public void ReactOnVotingParametersChanged (IReadOnlyList<VotingParameters> votingParametersList)
+	private void ReactOnVotingParametersChanged (IReadOnlyList<VotingParameters> votingParametersList)
 	{
 		VotingThreadsCancellationToken.Cancel();
 		VotingThreadsCancellationToken.Dispose();
