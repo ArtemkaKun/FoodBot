@@ -41,7 +41,7 @@ public class VotingManager
 		{
 			await Task.Delay(timeToWait, cancellationToken);
 		}
-		catch (TaskCanceledException _)
+		catch (TaskCanceledException)
 		{
 			return;
 		}
@@ -56,7 +56,7 @@ public class VotingManager
 				{
 					await Task.Delay(TimeSpan.FromMinutes(parameters.durationInMinutes), cancellationToken);
 				}
-				catch (TaskCanceledException _)
+				catch (TaskCanceledException)
 				{
 					return;
 				}
@@ -67,7 +67,7 @@ public class VotingManager
 				{
 					await Task.Delay(new TimeSpan(24, 0, 0), cancellationToken);
 				}
-				catch (TaskCanceledException _)
+				catch (TaskCanceledException)
 				{
 					return;
 				}
