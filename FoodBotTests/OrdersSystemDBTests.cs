@@ -46,8 +46,25 @@ public class OrdersSystemDBTests
 			Assert.Fail("No orders found");
 			return;
 		}
+
+		ordersSystemDB.RemoveOrder(testOrder);
+		Assert.Pass();
+	}
+
+	[Test]
+	public void AddTestOrderAndRemove_PresentInDB_False ()
+	{
+		ordersSystemDB.AddOrder(testOrder);
+		ordersSystemDB.RemoveOrder(testOrder);
+		
+		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifier(testOrder.GuildID, testOrder.ChannelID);
+		
+		if (foundOrders.Count != 0)
+		{
+			Assert.Fail("Order found");
+			return;
+		}
 		
 		Assert.Pass();
-		ordersSystemDB.RemoveOrder(testOrder);
 	}
 }

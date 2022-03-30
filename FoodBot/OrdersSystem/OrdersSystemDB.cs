@@ -21,7 +21,7 @@ public class OrdersSystemDB : DbContext
 
 	public void AddOrder (Order newOrder)
 	{
-		Orders.Add(newOrder);
+		Add(newOrder);
 		SaveChanges();
 	}
 
@@ -32,7 +32,7 @@ public class OrdersSystemDB : DbContext
 
 	public void RemoveOrder (Order orderToRemove)
 	{
-		Orders.Remove(orderToRemove);
+		Remove(orderToRemove);
 		SaveChanges();
 	}
 }
