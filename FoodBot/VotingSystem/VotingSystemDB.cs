@@ -12,6 +12,7 @@ public class VotingSystemDB : DbContext
 	private DbSet<VotingMainParameters> VotingMainParameters { get; init; } = null!;
 	private DbSet<VotingEndParameters> VotingEndParameters { get; init; } = null!;
 
+	// TODO same two methods as in OrdersSystemDB class. 30.03.2022. Artem Yurchenko
 	protected override void OnConfiguring (DbContextOptionsBuilder options)
 	{
 		options.UseSqlite(PATH_TO_DB_FILE);

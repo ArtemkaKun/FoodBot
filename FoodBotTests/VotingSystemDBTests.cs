@@ -11,6 +11,8 @@ namespace FoodBotTests;
 public class VotingSystemDBTests
 {
 	private readonly VotingSystemDB testVotingSystemDB = new();
+	
+	// TODO same code as in OrderSystemDBTests. 30.03.2022. Artem Yurchenko
 	private const ulong TEST_GUILD_ID = 0;
 	private const ulong TEST_CHANNEL_ID = 0;
 
