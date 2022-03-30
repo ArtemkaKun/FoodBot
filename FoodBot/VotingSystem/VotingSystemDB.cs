@@ -1,7 +1,6 @@
-using FoodBot.VotingSystem;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodBot.DBSystem;
+namespace FoodBot.VotingSystem;
 
 public class VotingSystemDB : DbContext
 {

@@ -1,5 +1,3 @@
-using FoodBot.DBSystem;
-
 namespace FoodBot.VotingSystem;
 
 public class VotingManager
