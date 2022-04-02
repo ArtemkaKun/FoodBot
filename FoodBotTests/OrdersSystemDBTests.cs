@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FoodBot.OrdersSystem;
 using NUnit.Framework;
 
@@ -93,6 +94,24 @@ public class OrdersSystemDBTests
 		
 		ordersSystemDB.RemoveOrder(testOrder);
 		ordersSystemDB.RemoveOrder(secondTestOrder);
+		Assert.Pass();
+	}
+	
+	[Test]
+	public void AddTestOrderAndUpdateIt_PresentAndValid_True ()
+	{
+		ordersSystemDB.AddOrder(testOrder);
+		ordersSystemDB.TryUpdateOrderTextByChatIdentifierAndID(testOrder.GuildID, testOrder.ChannelID, testOrder.ID, "Test2");
+		
+		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifier(testOrder.GuildID, testOrder.ChannelID);
+		
+		if (foundOrders.Count == 0 || foundOrders.Find(order => order.Text == "Test2") == null)
+		{
+			Assert.Fail("No order found");
+			return;
+		}
+
+		ordersSystemDB.RemoveOrder(testOrder);
 		Assert.Pass();
 	}
 }

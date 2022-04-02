@@ -35,4 +35,18 @@ public class OrdersSystemDB : DbContext
 		Remove(orderToRemove);
 		SaveChanges();
 	}
+
+	public bool TryUpdateOrderTextByChatIdentifierAndID (ulong guildID, ulong channelID, uint orderID, string newText)
+	{
+		Order? orderToUpdate = Orders.FirstOrDefault(order => order.GuildID == guildID && order.ChannelID == channelID && order.ID == orderID);
+		
+		if (orderToUpdate != null)
+		{
+			orderToUpdate.Text = newText;
+			SaveChanges();
+			return true;
+		}
+
+		return false;
+	}
 }
