@@ -67,4 +67,32 @@ public class OrdersSystemDBTests
 		
 		Assert.Pass();
 	}
+
+	[Test]
+	public void AddTwoOrders_BothPresentAndValid_True ()
+	{
+		Order secondTestOrder = new()
+		{
+			GuildID = TEST_GUILD_ID,
+			ChannelID = TEST_CHANNEL_ID,
+			Date = DateTime.Today,
+			PersonName = "Test",
+			Text = "Test2"
+		};
+		
+		ordersSystemDB.AddOrder(testOrder);
+		ordersSystemDB.AddOrder(secondTestOrder);
+		
+		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifier(testOrder.GuildID, testOrder.ChannelID);
+		
+		if (foundOrders.Count == 0 || foundOrders.Contains(testOrder) == false || foundOrders.Contains(secondTestOrder) == false)
+		{
+			Assert.Fail("No orders found");
+			return;
+		}
+		
+		ordersSystemDB.RemoveOrder(testOrder);
+		ordersSystemDB.RemoveOrder(secondTestOrder);
+		Assert.Pass();
+	}
 }
