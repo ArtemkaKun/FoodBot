@@ -101,7 +101,12 @@ public class OrdersSystemDBTests
 	public void AddTestOrderAndUpdateIt_PresentAndValid_True ()
 	{
 		ordersSystemDB.AddOrder(testOrder);
-		ordersSystemDB.TryUpdateOrderTextByChatIdentifierAndID(testOrder.GuildID, testOrder.ChannelID, testOrder.ID, "Test2");
+
+		if (ordersSystemDB.TryUpdateOrderTextByChatIdentifierAndID(testOrder.GuildID, testOrder.ChannelID, testOrder.ID, "Test2") == false)
+		{
+			Assert.Fail("Order update was failed");
+			return;
+		}
 		
 		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifier(testOrder.GuildID, testOrder.ChannelID);
 		
@@ -112,6 +117,56 @@ public class OrdersSystemDBTests
 		}
 
 		ordersSystemDB.RemoveOrder(testOrder);
+		Assert.Pass();
+	}
+
+	[Test]
+	public void AddTestOrderAndRemoveItById_NotPresentInDB_True ()
+	{
+		ordersSystemDB.AddOrder(testOrder);
+
+		if (ordersSystemDB.TryRemoveOrderByChatIdentifierAndID(testOrder.GuildID, testOrder.ChannelID, testOrder.ID) == false)
+		{
+			Assert.Fail("Order removing was failed");
+			return;
+		}
+		
+		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifier(testOrder.GuildID, testOrder.ChannelID);
+		
+		if (foundOrders.Count != 0)
+		{
+			Assert.Fail("Order found");
+			return;
+		}
+		
+		Assert.Pass();
+	}
+
+	[Test]
+	public void AddTwoTestOrdersAndGetOnlyForOneUser_ReturnedOnlyOneValidOrder_True ()
+	{
+		Order secondTestOrder = new()
+		{
+			GuildID = TEST_GUILD_ID,
+			ChannelID = TEST_CHANNEL_ID,
+			Date = DateTime.Today,
+			PersonName = "Test2",
+			Text = "Test"
+		};
+		
+		ordersSystemDB.AddOrder(testOrder);
+		ordersSystemDB.AddOrder(secondTestOrder);
+		
+		List<Order> foundOrders = ordersSystemDB.GetTodayOrdersByChatIdentifierAndPersonName(testOrder.GuildID, testOrder.ChannelID, testOrder.PersonName);
+		
+		if (foundOrders.Count is 0 or not 1 || foundOrders.Contains(testOrder) == false)
+		{
+			Assert.Fail("No orders found");
+			return;
+		}
+		
+		ordersSystemDB.RemoveOrder(testOrder);
+		ordersSystemDB.RemoveOrder(secondTestOrder);
 		Assert.Pass();
 	}
 }

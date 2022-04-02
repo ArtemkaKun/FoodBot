@@ -49,4 +49,23 @@ public class OrdersSystemDB : DbContext
 
 		return false;
 	}
+
+	public bool TryRemoveOrderByChatIdentifierAndID (ulong guildID, ulong channelID, uint orderID)
+	{
+		Order? orderToRemove = Orders.FirstOrDefault(order => order.GuildID == guildID && order.ChannelID == channelID && order.ID == orderID);
+		
+		if (orderToRemove != null)
+		{
+			RemoveOrder(orderToRemove);
+			SaveChanges();
+			return true;
+		}
+		
+		return false;
+	}
+
+	public List<Order> GetTodayOrdersByChatIdentifierAndPersonName (ulong guildID, ulong channelID, string personName) 
+	{
+		return Orders.Where(order => order.GuildID == guildID && order.ChannelID == channelID && order.Date == DateTime.Today && order.PersonName == personName).ToList();
+	}
 }
