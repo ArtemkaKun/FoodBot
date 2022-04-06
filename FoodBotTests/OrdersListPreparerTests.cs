@@ -30,4 +30,30 @@ public class OrdersListPreparerTests
 		List<Order> sortedList = OrdersListPreparer.SortOrders(orders);
 		Assert.AreEqual(expectedSortedList, sortedList);
 	}
+	
+	[Test]
+	public void CountOrders_OrdersCountEqualToExpectedCount_True ()
+	{
+		List<Order> orders = new()
+		{
+			new Order { PersonName = "TestPerson", Text = "orderA" },
+			new Order { PersonName = "TestPerson", Text = "orderA" },
+			new Order { PersonName = "TestPerson", Text = "orderB" },
+			new Order { PersonName = "TestPerson", Text = "orderB" },
+			new Order { PersonName = "TestPerson", Text = "orderB" },
+			new Order { PersonName = "TestPerson", Text = "orderC" },
+			new Order { PersonName = "TestPerson", Text = "orderZ" }
+		};
+		
+		Dictionary<Order, int> expectedOrderCount = new()
+		{
+			{ new Order { PersonName = "TestPerson", Text = "orderA" }, 2 },
+			{ new Order { PersonName = "TestPerson", Text = "orderB" }, 3 },
+			{ new Order { PersonName = "TestPerson", Text = "orderC" }, 1 },
+			{ new Order { PersonName = "TestPerson", Text = "orderZ" }, 1 }
+		};
+		
+		Dictionary<Order, int> orderCount = OrdersListPreparer.CountOrders(orders);
+		Assert.AreEqual(expectedOrderCount, orderCount);
+	}
 }
