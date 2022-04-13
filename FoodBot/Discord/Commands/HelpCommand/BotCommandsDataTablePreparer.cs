@@ -4,6 +4,7 @@ namespace FoodBot.Discord.Commands.HelpCommand;
 
 public static class BotCommandsDataTablePreparer
 {
+	// TODO same values as in the test class. 13.04.2022. Artem Yurchenko
 	private const string COMMANDS_COLUMN_NAME = "Commands";
 	private const string DESCRIPTION_COLUMN_NAME = "Description";
 	

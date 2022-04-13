@@ -11,7 +11,7 @@ public class BotCommandsCollectorTests
 	{
 		Dictionary<string, string> expectedCommandsDescriptionMap = new()
 		{
-			{"!help, !h", "Shows bot's commands"}
+			{"!help, !h", "Shows bot's commands"} // TODO same values as in the BotCommandsDataTablePreparerTests class. 13.04.2022. Artem Yurchenko.
 		};
 		
 		Dictionary<string, string> actualCommandsDescriptionMap = BotCommandsCollector.GetCommandDescriptionMap();
