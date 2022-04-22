@@ -28,6 +28,7 @@ public static class BotCommandsCollector
 		return Assembly.GetExecutingAssembly()
 					   .GetTypes()
 					   .Where(typeUnit => typeUnit.IsAssignableTo(typeof(ModuleBase<SocketCommandContext>)))
+					   .OrderBy(commandType => commandType.FullName)
 					   .SelectMany(commandsModule => commandsModule.GetMethods().Where(method => method.GetCustomAttribute<CommandAttribute>() != null));
 	}
 	
@@ -35,6 +36,11 @@ public static class BotCommandsCollector
 	{
 		string? commandName = GetCommandName(command);
 		string aliasesString = GetAliasesString(command);
+
+		if (string.IsNullOrEmpty(aliasesString) == true)
+		{
+			return $"{string.Format(COMMAND_NAME_TEMPLATE, commandName)},";
+		}
 
 		return $"{string.Format(COMMAND_NAME_TEMPLATE, commandName)}, {aliasesString}";
 	}
