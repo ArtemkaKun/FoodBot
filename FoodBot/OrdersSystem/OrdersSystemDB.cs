@@ -18,6 +18,12 @@ public class OrdersSystemDB : DbContext
 	{
 		Database.EnsureCreated();
 	}
+	
+	public void Terminate ()
+	{
+		ChangeTracker.Clear();
+		Database.EnsureDeleted();
+	}
 
 	public void AddOrder (Order newOrder)
 	{
