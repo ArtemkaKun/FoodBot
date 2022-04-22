@@ -13,6 +13,6 @@ public class HelpCommands : ModuleBase<SocketCommandContext>
 	[Summary(HELP_COMMAND_DESCRIPTION)]
 	public Task ShowHelpMessage ()
 	{
-		return null;
+		return ReplyAsync(HelpCommandResult.GetHelpCommandAnswer());
 	}
 }
