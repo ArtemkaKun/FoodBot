@@ -1,4 +1,3 @@
-using System.Text;
 using Discord.Commands;
 using FoodBot.OrdersSystem;
 
@@ -12,20 +11,20 @@ public abstract class BaseShowCommands : ModuleBase<SocketCommandContext>
 	
 	private const string NOTHING_TO_SHOW_MESSAGE = "Nothing to show";
 
-	private Dictionary<string, Func<List<Order>, StringBuilder>> ShowAllOptionsFunctions { get; set; }
+	private Dictionary<string, Func<List<Order>, string>> ShowAllOptionsFunctions { get; set; }
 
 	protected BaseShowCommands ()
 	{
-		ShowAllOptionsFunctions = new Dictionary<string, Func<List<Order>, StringBuilder>>
+		ShowAllOptionsFunctions = new Dictionary<string, Func<List<Order>, string>>
 		{
-			// {COMMON_SHOW_COMMAND_NAME, Program.OrdersOutputMaintainer.FormOrdersShowData},
-			// {SORT_SHOW_COMMAND_NAME, Program.OrdersOutputMaintainer.FormOrdersSortedShowData},
-			// {SUM_SHOW_COMMAND_NAME, Program.OrdersOutputMaintainer.FormOrdersSummaryShowData}
+			{COMMON_SHOW_COMMAND_NAME, ShowCommandResult.GetShowCommandAnswer},
+			{SORT_SHOW_COMMAND_NAME, ShowCommandResult.GetShowSortedCommandAnswer},
+			{SUM_SHOW_COMMAND_NAME, ShowCommandResult.GetShowCountCommandAnswer}
 		};
 	}
 
 	protected Task ShowOrdersData (string command, List<Order> todayOrders)
 	{
-		return ReplyAsync(todayOrders.Count == 0 ? NOTHING_TO_SHOW_MESSAGE : ShowAllOptionsFunctions[command].Invoke(todayOrders).ToString());
+		return ReplyAsync(todayOrders.Count == 0 ? NOTHING_TO_SHOW_MESSAGE : ShowAllOptionsFunctions[command].Invoke(todayOrders));
 	}
 }
