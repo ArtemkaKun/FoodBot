@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using FoodBot;
 using FoodBot.Discord.Commands.OrderCommand;
 using FoodBot.OrdersSystem;
