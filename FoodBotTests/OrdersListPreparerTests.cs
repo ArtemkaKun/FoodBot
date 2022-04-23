@@ -45,15 +45,15 @@ public class OrdersListPreparerTests
 			new Order { PersonName = "TestPerson", Text = "orderZ" }
 		};
 		
-		Dictionary<Order, int> expectedOrderCount = new()
+		Dictionary<string, int> expectedOrderCount = new()
 		{
-			{ new Order { PersonName = "TestPerson", Text = "orderA" }, 2 },
-			{ new Order { PersonName = "TestPerson", Text = "orderB" }, 3 },
-			{ new Order { PersonName = "TestPerson", Text = "orderC" }, 1 },
-			{ new Order { PersonName = "TestPerson", Text = "orderZ" }, 1 }
+			{ "orderA", 2 },
+			{ "orderB", 3 },
+			{ "orderC", 1 },
+			{ "orderZ", 1 }
 		};
 		
-		Dictionary<Order, int> orderCount = OrdersListPreparer.CountOrders(orders);
+		Dictionary<string, int> orderCount = OrdersListPreparer.CountOrders(orders);
 		Assert.AreEqual(expectedOrderCount, orderCount);
 	}
 }

@@ -7,21 +7,21 @@ public static class OrdersListPreparer
 		return unsortedOrders.OrderBy(order => order.Text).ToList();
 	}
 	
-	public static Dictionary<Order, int> CountOrders (IEnumerable<Order> orders)
+	public static Dictionary<string, int> CountOrders (IEnumerable<Order> orders)
 	{
 		List<Order> sortedOrders = SortOrders(orders);
 		
-		Dictionary<Order, int> countedOrders = new();
+		Dictionary<string, int> countedOrders = new();
 		
 		foreach (Order order in sortedOrders)
 		{
-			if (countedOrders.ContainsKey(order))
+			if (countedOrders.ContainsKey(order.Text))
 			{
-				countedOrders[order]++;
+				countedOrders[order.Text]++;
 			}
 			else
 			{
-				countedOrders.Add(order, 1);
+				countedOrders.Add(order.Text, 1);
 			}
 		}
 		
