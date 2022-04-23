@@ -28,14 +28,14 @@ public class OrderCommands : ModuleBase<SocketCommandContext>
 
 	[Command(UPDATE_COMMAND_NAME)]
 	[Summary(UPDATE_USER_ORDER_COMMAND_DESCRIPTION)]
-	public Task UpdateUserOrder (int idOfOrder, [Remainder] string newOrderText)
+	public Task UpdateUserOrder (int orderID, [Remainder] string newOrderText)
 	{
 		return null;
 	}
 
 	[Command(DELETE_COMMAND_NAME)]
 	[Summary(DELETE_ORDER_COMMAND_DESCRIPTION)]
-	public Task DeleteOrder (int idOfOrder)
+	public Task DeleteOrder (int orderID)
 	{
 		return null;
 	}

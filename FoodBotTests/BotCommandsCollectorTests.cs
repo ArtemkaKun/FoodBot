@@ -13,8 +13,8 @@ public class BotCommandsCollectorTests
 		{
 			{"!help, !h", "Shows bot's commands"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 13.04.2022. Artem Yurchenko.
 			{"!order -mk, <orderText>", "Creates a new order"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 22.04.2022. Artem Yurchenko.
-			{"!order -upd, <idOfOrder> <newOrderText>", "Updates order with provided text"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 22.04.2022. Artem Yurchenko.
-			{"!order -del, <idOfOrder>", "Deletes order"} // TODO same values as in the BotCommandsDataTablePreparerTests class. 22.04.2022. Artem Yurchenko.
+			{"!order -upd, <orderID> <newOrderText>", "Updates order with provided text"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 22.04.2022. Artem Yurchenko.
+			{"!order -del, <orderID>", "Deletes order"} // TODO same values as in the BotCommandsDataTablePreparerTests class. 22.04.2022. Artem Yurchenko.
 		};
 		
 		Dictionary<string, string> actualCommandsDescriptionMap = BotCommandsCollector.GetCommandDescriptionMap();
