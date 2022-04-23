@@ -18,6 +18,12 @@ public class BotCommandsDataTablePreparerTests
 		expectedDataTable.Rows.Add("!order -mk, <orderText>", "Creates a new order"); // TODO same values as in the BotCommandsCollectorTests class. 22.04.2022. Artem Yurchenko.
 		expectedDataTable.Rows.Add("!order -upd, <orderID> <newOrderText>", "Updates order with provided text"); // TODO same values as in the BotCommandsCollectorTests class. 22.04.2022. Artem Yurchenko.
 		expectedDataTable.Rows.Add("!order -del, <orderID>", "Deletes order"); // TODO same values as in the BotCommandsCollectorTests class. 22.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shall", "Shows all today's orders"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shall -sort", "Shows all today's orders (sorted)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shall -sum", "Shows all today's orders (summary)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shmy", "Shows your today's orders"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shmy -sort", "Shows your today's orders (sorted)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!shmy -sum", "Shows your today's orders (summary)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
 
 		Dictionary<string, string> actualCommandsDescriptionMap = BotCommandsCollector.GetCommandDescriptionMap();
 		DataTable commandsDataTable = BotCommandsDataTablePreparer.GetCommandsDataTable(actualCommandsDescriptionMap);

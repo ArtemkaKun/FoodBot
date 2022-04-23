@@ -17,7 +17,16 @@ public static class BotCommandsCollector
 
 		foreach (MethodInfo method in commandsMethods)
 		{
-			commandDescriptionMap.Add($"{GetCommandNameWithAliases(method)}{GetMethodArgumentNames(method)}", method.GetCustomAttribute<SummaryAttribute>()?.Text ?? string.Empty);
+			string commandNameWithAliases = GetCommandNameWithAliases(method);
+			string commandArgumentNames = GetMethodArgumentNames(method);
+			string fullCommandString = commandNameWithAliases;
+
+			if (string.IsNullOrEmpty(commandArgumentNames) == false)
+			{
+				fullCommandString += $",{commandArgumentNames}";
+			}
+			
+			commandDescriptionMap.Add(fullCommandString, method.GetCustomAttribute<SummaryAttribute>()?.Text ?? string.Empty);
 		}
 
 		return commandDescriptionMap;
@@ -39,7 +48,7 @@ public static class BotCommandsCollector
 
 		if (string.IsNullOrEmpty(aliasesString) == true)
 		{
-			return $"{string.Format(COMMAND_NAME_TEMPLATE, commandName)},";
+			return $"{string.Format(COMMAND_NAME_TEMPLATE, commandName)}";
 		}
 
 		return $"{string.Format(COMMAND_NAME_TEMPLATE, commandName)}, {aliasesString}";
@@ -50,7 +59,19 @@ public static class BotCommandsCollector
 		string? commandsGroupName = command.DeclaringType?.GetCustomAttribute<GroupAttribute>()?.Prefix;
 		string? commandMethodName = command.GetCustomAttribute<CommandAttribute>()?.Text;
 
-		return string.IsNullOrEmpty(commandsGroupName) == false ? $"{commandsGroupName} {commandMethodName}" : commandMethodName;
+		if (string.IsNullOrEmpty(commandsGroupName) == false)
+		{
+			string fullCommandName = commandsGroupName;
+			
+			if (string.IsNullOrEmpty(commandMethodName) == false)
+			{
+				fullCommandName += $" {commandMethodName}";
+			}
+
+			return fullCommandName;
+		}
+		
+		return commandMethodName;
 	}
 
 	private static string GetAliasesString (MemberInfo command)
