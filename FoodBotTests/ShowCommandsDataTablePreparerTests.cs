@@ -64,4 +64,61 @@ public class ShowCommandsDataTablePreparerTests
 			}
 		}
 	}
+	
+	[Test]
+	public void ConvertRandomOrdersToDataTable_ReturnedDataTableEqualToExpected_True ()
+	{
+		DataTable expectedDataTable = new();
+		// TODO same values as in the ShowCommandsDataTablePreparer class. 23.04.2022. Artem Yurchenko
+		expectedDataTable.Columns.Add("ID", typeof(uint));
+		expectedDataTable.Columns.Add("Person", typeof(string));
+		expectedDataTable.Columns.Add("Order", typeof(string));
+		expectedDataTable.Rows.Add("3", "Tets2", "Test Text2");
+		expectedDataTable.Rows.Add("1", "Tets", "Test Text");
+		expectedDataTable.Rows.Add("2", "Tets1", "Test Text1");
+		
+		List<Order> orders = new()
+		{
+			new Order
+			{
+				ID = 3,
+				PersonName = "Tets2",
+				Text = "Test Text2"
+			},
+			new Order
+			{
+				ID = 1,
+				PersonName = "Tets",
+				Text = "Test Text"
+			},
+			new Order
+			{
+				ID = 2,
+				PersonName = "Tets1",
+				Text = "Test Text1"
+			}
+		};
+		
+		DataTable commandsDataTable = ShowCommandsDataTablePreparer.GetOrdersDataTable(orders);
+
+		if (expectedDataTable.Columns.Count != commandsDataTable.Columns.Count)
+		{
+			Assert.Fail("The number of columns in the expected data table is not equal to the number of columns in the actual data table.");
+			return;
+		}
+
+		if (expectedDataTable.Rows.Count != commandsDataTable.Rows.Count)
+		{
+			Assert.Fail("The number of rows in the expected data table is not equal to the number of rows in the actual data table.");
+			return;
+		}
+
+		for (int columnIndex = 0; columnIndex < expectedDataTable.Columns.Count; columnIndex++)
+		{
+			for (int rowIndex = 0; rowIndex < expectedDataTable.Rows.Count; rowIndex++)
+			{
+				Assert.AreEqual(expectedDataTable.Rows[rowIndex][columnIndex], commandsDataTable.Rows[rowIndex][columnIndex]);
+			}
+		}
+	}
 }
