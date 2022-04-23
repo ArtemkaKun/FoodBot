@@ -38,4 +38,38 @@ public class OrderCommandsResultsTests
 
 		Assert.IsTrue(result);
 	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderWithInvalidGuildID_Success_False ()
+	{
+		bool result = OrderCommandsResults.AddOrder(0, validTestOrder.ChannelID, validTestOrder.PersonName, validTestOrder.PersonName);
+
+		Assert.IsFalse(result);
+	}
+	
+	
+	[Test, NonParallelizable]
+	public void AddOrderWithInvalidChannelID_Success_False ()
+	{
+		bool result = OrderCommandsResults.AddOrder(validTestOrder.GuildID, 0, validTestOrder.PersonName, validTestOrder.PersonName);
+
+		Assert.IsFalse(result);
+	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderWithInvalidPersonName_Success_False ()
+	{
+		bool result = OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, "", validTestOrder.PersonName);
+
+		Assert.IsFalse(result);
+	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderWithInvalidText_Success_False ()
+	{
+		bool result = OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, validTestOrder.PersonName, "");
+
+		Assert.IsFalse(result);
+	}
+	
 }
