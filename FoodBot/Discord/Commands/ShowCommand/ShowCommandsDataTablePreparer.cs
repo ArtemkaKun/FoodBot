@@ -6,8 +6,8 @@ namespace FoodBot.Discord.Commands.ShowCommand;
 public static class ShowCommandsDataTablePreparer
 {
 	// TODO same values as in the test class. 23.04.2022. Artem Yurchenko
-	private const string ID_COLUMN_NAME = "Commands";
-	private const string PERSON_COLUMN_NAME = "Description";
+	private const string ID_COLUMN_NAME = "ID";
+	private const string PERSON_COLUMN_NAME = "Person";
 	private const string ORDER_COLUMN_NAME = "Order";
 	private const string COUNT_COLUMN_NAME = "Count";
 	
