@@ -29,7 +29,7 @@ public static class OrderCommandsResults
 	
 	public static bool RemoveOrder (ulong guildID, ulong channelID, uint orderID)
 	{
-		if (guildID == 0 || channelID == 0)
+		if (guildID == 0 || channelID == 0 || orderID == 0)
 		{
 			return false;
 		}

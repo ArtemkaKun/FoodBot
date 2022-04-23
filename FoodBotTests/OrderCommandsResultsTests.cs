@@ -72,4 +72,39 @@ public class OrderCommandsResultsTests
 		Assert.IsFalse(result);
 	}
 	
+	[Test, NonParallelizable]
+	public void AddOrderAndRemove_Success_True ()
+	{
+		OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, validTestOrder.PersonName, validTestOrder.PersonName);
+		bool result = OrderCommandsResults.RemoveOrder(validTestOrder.GuildID, validTestOrder.ChannelID, 1);
+		
+		Assert.IsTrue(result);
+	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderAndRemoveWithInvalidGuildID_Success_False ()
+	{
+		OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, validTestOrder.PersonName, validTestOrder.PersonName);
+		bool result = OrderCommandsResults.RemoveOrder(0, validTestOrder.ChannelID, 1);
+		
+		Assert.IsFalse(result);
+	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderAndRemoveWithInvalidChannelID_Success_False ()
+	{
+		OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, validTestOrder.PersonName, validTestOrder.PersonName);
+		bool result = OrderCommandsResults.RemoveOrder(validTestOrder.GuildID, 0, 1);
+		
+		Assert.IsFalse(result);
+	}
+	
+	[Test, NonParallelizable]
+	public void AddOrderAndRemoveWithInvalidOrderID_Success_False ()
+	{
+		OrderCommandsResults.AddOrder(validTestOrder.GuildID, validTestOrder.ChannelID, validTestOrder.PersonName, validTestOrder.PersonName);
+		bool result = OrderCommandsResults.RemoveOrder(validTestOrder.GuildID, validTestOrder.ChannelID, 0);
+		
+		Assert.IsFalse(result);
+	}
 }
