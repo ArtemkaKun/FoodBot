@@ -200,4 +200,32 @@ public class VotingCommandsResultTests
 		Assert.IsNotNull(errorMessage);
 	}
 	
+	[Test, NonParallelizable]
+	public void RemoveVotingEndParameters_Success_True ()
+	{
+		VotingCommandsResult.SetVotingEndParameters(1, 1, "Test end");
+		string? errorMessage = VotingCommandsResult.RemoveVotingEndParameters(1, 1);
+		Assert.IsNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingEndParametersWithInvalidGuidID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingEndParameters(0, 1);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingEndParametersWithInvalidChannelID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingEndParameters(1, 0);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveInexistentVotingEndParameters_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingEndParameters(1, 1);
+		Assert.IsNotNull(errorMessage);
+	}
 }
