@@ -6,7 +6,7 @@ public static class VotingCommandsResult
 {
 	public static string? SetVotingStartParameters (ulong guildID, ulong channelID, string startTime, string message)
 	{
-		if (guildID == 0 || channelID == 0 || string.IsNullOrEmpty(startTime) || string.IsNullOrEmpty(message) || TimeSpan.TryParse(startTime, out TimeSpan startTimeParsed) == false) // TODO code duplication. 24.04.2022. Artem Yurchenko
+		if (guildID == 0 || channelID == 0 || string.IsNullOrEmpty(startTime) == true|| string.IsNullOrEmpty(message) == true || TimeSpan.TryParse(startTime, out TimeSpan startTimeParsed) == false) // TODO code duplication. 24.04.2022. Artem Yurchenko
 		{
 			return "Wrong input parameters";
 		}
@@ -32,6 +32,21 @@ public static class VotingCommandsResult
 			GuildID = guildID,
 			ChannelID = channelID,
 			DurationInMinutes = durationInMinutes
+		});
+	}
+
+	public static string? SetVotingEndParameters (ulong guildID, ulong channelID, string message)
+	{
+		if (guildID == 0 || channelID == 0 || string.IsNullOrEmpty(message) == true) // TODO code duplication. 24.04.2022. Artem Yurchenko
+		{
+			return "Wrong input parameters";
+		}
+
+		return Program.VotingSystemDB.AddVotingEndParameters(new VotingEndParameters
+		{
+			GuildID = guildID,
+			ChannelID = channelID,
+			Message = message
 		});
 	}
 }
