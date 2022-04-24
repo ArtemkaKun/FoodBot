@@ -19,6 +19,7 @@ public class OrdersSystemDB : DbContext
 		Database.EnsureCreated();
 	}
 	
+	// TODO wrap into debug preprocessor since used only for tests. 24.04.2022. Artem Yurchenko
 	public void Terminate ()
 	{
 		ChangeTracker.Clear();
