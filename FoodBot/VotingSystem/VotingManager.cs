@@ -48,7 +48,7 @@ public class VotingManager
 		{
 			if (CheckIfNotifyToday() == true)
 			{
-				//notify start
+				await Program.BotClient.SendMessage(parameters.guildID, parameters.channelID, string.IsNullOrEmpty(parameters.startMessage) == false ? parameters.startMessage : "Let's order some food");
 				
 				try
 				{
@@ -59,7 +59,7 @@ public class VotingManager
 					return;
 				}
 				
-				//notify end
+				await Program.BotClient.SendMessage(parameters.guildID, parameters.channelID, string.IsNullOrEmpty(parameters.endMessage) == false ? parameters.endMessage : "Food voting was finished");
 
 				try
 				{
