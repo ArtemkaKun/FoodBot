@@ -23,6 +23,12 @@ public class VotingSystemDB : DbContext
 		Database.EnsureCreated();
 	}
 
+	public void Terminate ()
+	{
+		ChangeTracker.Clear();
+		Database.EnsureDeleted();
+	}
+
 	public string? AddVotingStartParameters (VotingStartParameters newVotingStartParameters)
 	{
 		if (TryGetVotingStartParametersByChatIdentifier(newVotingStartParameters.GuildID, newVotingStartParameters.ChannelID, out _) == true)
