@@ -7,7 +7,7 @@ Features of a bot:
 - Notifications about start and finish food voting
 - Flexible orders list (CRUD operations with a few helper methods)
 
-The bot was written with .NET 5 framework and Discord.NET library.
+The bot was written with .NET 6 framework and Discord.NET library.
 
 # Why?
 
