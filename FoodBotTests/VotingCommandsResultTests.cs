@@ -141,5 +141,33 @@ public class VotingCommandsResultTests
 		(string? message, string? errorMessage) = VotingCommandsResult.GetVotingParameters(1, 1);
 		Assert.IsTrue(string.IsNullOrEmpty(message) == true && string.IsNullOrEmpty(errorMessage) == false && errorMessage == "No voting parameters found");
 	}
+
+	[Test, NonParallelizable]
+	public void RemoveVotingStartParameters_Success_True ()
+	{
+		VotingCommandsResult.SetVotingStartParameters(1, 1, "10:00", "Test start");
+		string? errorMessage = VotingCommandsResult.RemoveVotingStartParameters(1, 1);
+		Assert.IsNull(errorMessage);
+	}
 	
+	[Test, NonParallelizable]
+	public void RemoveVotingStartParametersWithInvalidGuidID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingStartParameters(0, 1);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingStartParametersWithInvalidChannelID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingStartParameters(1, 0);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveInexistentVotingStartParametersWithInvalidChannelID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingStartParameters(1, 1);
+		Assert.IsNotNull(errorMessage);
+	}
 }

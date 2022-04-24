@@ -52,7 +52,7 @@ public static class VotingCommandsResult
 
 	public static (string? message, string? errorMessage) GetVotingParameters (ulong guildID, ulong channelID)
 	{
-		if (guildID == 0 || channelID == 0)
+		if (guildID == 0 || channelID == 0) // TODO code duplication. 24.04.2022. Artem Yurchenko
 		{
 			return (null, "Wrong input parameters");
 		}
@@ -67,5 +67,15 @@ public static class VotingCommandsResult
 		}
 		
 		return ($"Start voting at {startParameters?.StartTime} with a message \"{startParameters?.Message}\", voting duration is {mainParameters?.DurationInMinutes} minutes, end message is \"{endParameters?.Message}\"", null);
+	}
+
+	public static string? RemoveVotingStartParameters (ulong guildID, ulong channelID)
+	{
+		if (guildID == 0 || channelID == 0) // TODO code duplication. 24.04.2022. Artem Yurchenko
+		{
+			return "Wrong input parameters";
+		}
+
+		return Program.VotingSystemDB.RemoveVotingStartParametersByChatIdentifier(guildID, channelID);
 	}
 }
