@@ -109,4 +109,37 @@ public class VotingCommandsResultTests
 		string? errorMessage = VotingCommandsResult.SetVotingEndParameters(1, 1, "");
 		Assert.IsNotNull(errorMessage);
 	}
+	
+	[Test, NonParallelizable]
+	public void GetVotingParameters_Success_True ()
+	{
+		VotingCommandsResult.SetVotingStartParameters(1, 1, "10:00", "Test start");
+		VotingCommandsResult.SetVotingMainParameters(1, 1, 10);
+		VotingCommandsResult.SetVotingEndParameters(1, 1, "Test end");
+		
+		(string? message, string? errorMessage) = VotingCommandsResult.GetVotingParameters(1, 1);
+		Assert.IsTrue(string.IsNullOrEmpty(message) == false && message == "Start voting at 10:00:00 with a message \"Test start\", voting duration is 10 minutes, end message is \"Test end\"" && string.IsNullOrEmpty(errorMessage) == true);
+	}
+	
+	[Test, NonParallelizable]
+	public void GetVotingParametersWithInvalidGuidID_Success_False ()
+	{
+		(string? message, string? errorMessage) = VotingCommandsResult.GetVotingParameters(0, 1);
+		Assert.IsTrue(string.IsNullOrEmpty(message) == true && string.IsNullOrEmpty(errorMessage) == false && errorMessage == "Wrong input parameters");
+	}
+	
+	[Test, NonParallelizable]
+	public void GetVotingParametersWithInvalidChannelID_Success_False ()
+	{
+		(string? message, string? errorMessage) = VotingCommandsResult.GetVotingParameters(1, 0);
+		Assert.IsTrue(string.IsNullOrEmpty(message) == true && string.IsNullOrEmpty(errorMessage) == false && errorMessage == "Wrong input parameters");
+	}
+	
+	[Test, NonParallelizable]
+	public void GetInexistentVotingParameters_Success_False ()
+	{
+		(string? message, string? errorMessage) = VotingCommandsResult.GetVotingParameters(1, 1);
+		Assert.IsTrue(string.IsNullOrEmpty(message) == true && string.IsNullOrEmpty(errorMessage) == false && errorMessage == "No voting parameters found");
+	}
+	
 }

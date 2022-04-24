@@ -49,4 +49,23 @@ public static class VotingCommandsResult
 			Message = message
 		});
 	}
+
+	public static (string? message, string? errorMessage) GetVotingParameters (ulong guildID, ulong channelID)
+	{
+		if (guildID == 0 || channelID == 0)
+		{
+			return (null, "Wrong input parameters");
+		}
+		
+		bool startParametersGetResult = Program.VotingSystemDB.TryGetVotingStartParametersByChatIdentifier(guildID, channelID, out VotingStartParameters? startParameters);
+		bool mainParametersGetResult = Program.VotingSystemDB.TryGetVotingMainParametersByChatIdentifier(guildID, channelID, out VotingMainParameters? mainParameters);
+		bool endParametersGetResult = Program.VotingSystemDB.TryGetVotingEndParametersByChatIdentifier(guildID, channelID, out VotingEndParameters? endParameters);
+		
+		if (startParametersGetResult == false || mainParametersGetResult == false || endParametersGetResult == false)
+		{
+			return (null, "No voting parameters found");
+		}
+		
+		return ($"Start voting at {startParameters?.StartTime} with a message \"{startParameters?.Message}\", voting duration is {mainParameters?.DurationInMinutes} minutes, end message is \"{endParameters?.Message}\"", null);
+	}
 }
