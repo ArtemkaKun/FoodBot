@@ -24,6 +24,13 @@ public class BotCommandsDataTablePreparerTests
 		expectedDataTable.Rows.Add("!shmy", "Shows your today's orders"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
 		expectedDataTable.Rows.Add("!shmy -sort", "Shows your today's orders (sorted)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
 		expectedDataTable.Rows.Add("!shmy -sum", "Shows your today's orders (summary)"); // TODO same values as in the BotCommandsCollectorTests class. 23.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -setStart, <startTime> <message>", "Sets food vote reminder start parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -setMain, <durationInMinutes>", "Sets food vote reminder main parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -setEnd, <message>", "Sets food vote reminder end parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -sh", "Show channel's reminder data"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -delStart", "Deletes food vote reminder start parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -delMain", "Deletes food vote reminder main parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
+		expectedDataTable.Rows.Add("!vote -delEnd", "Deletes food vote reminder end parameters"); // TODO same values as in the BotCommandsCollectorTests class. 24.04.2022. Artem Yurchenko.
 
 		Dictionary<string, string> actualCommandsDescriptionMap = BotCommandsCollector.GetCommandDescriptionMap();
 		DataTable commandsDataTable = BotCommandsDataTablePreparer.GetCommandsDataTable(actualCommandsDescriptionMap);

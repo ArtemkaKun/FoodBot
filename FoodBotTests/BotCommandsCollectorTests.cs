@@ -20,7 +20,14 @@ public class BotCommandsCollectorTests
 			{"!shmy -sum", "Shows your today's orders (summary)"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
 			{"!shall", "Shows all today's orders"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
 			{"!shall -sort", "Shows all today's orders (sorted)"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
-			{"!shall -sum", "Shows all today's orders (summary)"} // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
+			{"!shall -sum", "Shows all today's orders (summary)"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
+			{"!vote -setStart, <startTime> <message>", "Sets food vote reminder start parameters"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 23.04.2022. Artem Yurchenko.
+			{"!vote -setMain, <durationInMinutes>", "Sets food vote reminder main parameters"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
+			{"!vote -setEnd, <message>", "Sets food vote reminder end parameters"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
+			{"!vote -sh", "Show channel's reminder data"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
+			{"!vote -delStart", "Deletes food vote reminder start parameters"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
+			{"!vote -delMain", "Deletes food vote reminder main parameters"}, // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
+			{"!vote -delEnd", "Deletes food vote reminder end parameters"} // TODO same values as in the BotCommandsDataTablePreparerTests class. 24.04.2022. Artem Yurchenko.
 		};
 		
 		Dictionary<string, string> actualCommandsDescriptionMap = BotCommandsCollector.GetCommandDescriptionMap();
