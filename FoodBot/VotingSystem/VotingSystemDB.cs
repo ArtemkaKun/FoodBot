@@ -5,7 +5,7 @@ namespace FoodBot.VotingSystem;
 public class VotingSystemDB : DbContext
 {
 	public event Action<IReadOnlyList<VotingParameters>>? OnVotingParametersChanged;
-	
+
 	private const string PATH_TO_DB_FILE = @"Data Source=VotingData.db";
 
 	private DbSet<VotingStartParameters> VotingStartParameters { get; init; } = null!;

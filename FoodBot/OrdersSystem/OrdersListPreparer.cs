@@ -6,13 +6,13 @@ public static class OrdersListPreparer
 	{
 		return unsortedOrders.OrderBy(order => order.Text).ToList();
 	}
-	
+
 	public static Dictionary<string, int> CountOrders (IEnumerable<Order> orders)
 	{
 		List<Order> sortedOrders = SortOrders(orders);
-		
+
 		Dictionary<string, int> countedOrders = new();
-		
+
 		foreach (Order order in sortedOrders)
 		{
 			if (countedOrders.ContainsKey(order.Text))
@@ -24,7 +24,7 @@ public static class OrdersListPreparer
 				countedOrders.Add(order.Text, 1);
 			}
 		}
-		
+
 		return countedOrders.OrderByDescending(orderCount => orderCount.Value).ToDictionary(orderCount => orderCount.Key, orderCount => orderCount.Value);
 	}
 }

@@ -8,7 +8,7 @@ public abstract class BaseShowCommands : ModuleBase<SocketCommandContext>
 	protected const string COMMON_SHOW_COMMAND_NAME = "";
 	protected const string SORT_SHOW_COMMAND_NAME = "-sort";
 	protected const string SUM_SHOW_COMMAND_NAME = "-sum";
-	
+
 	private const string NOTHING_TO_SHOW_MESSAGE = "Nothing to show";
 
 	private Dictionary<string, Func<List<Order>, string>> ShowAllOptionsFunctions { get; set; }

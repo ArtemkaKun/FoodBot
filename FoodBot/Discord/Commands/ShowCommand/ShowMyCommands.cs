@@ -10,7 +10,7 @@ public class ShowMyCommands : BaseShowCommands
 	private const string SHOW_USER_TODAY_ORDERS_COMMAND_DESCRIPTION = "Shows your today's orders";
 	private const string SHOW_USER_TODAY_ORDERS_SORTED_COMMAND_DESCRIPTION = "Shows your today's orders (sorted)";
 	private const string SHOW_USER_TODAY_ORDERS_SUMMARY_COMMAND_DESCRIPTION = "Shows your today's orders (summary)";
-	
+
 	[Command(COMMON_SHOW_COMMAND_NAME)]
 	[Summary(SHOW_USER_TODAY_ORDERS_COMMAND_DESCRIPTION)]
 	public Task ShowUserTodayOrders ()

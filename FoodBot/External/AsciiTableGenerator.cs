@@ -10,8 +10,8 @@ namespace AsciiTableGenerators
 		private const string ALIGN_CHAR = " ";
 		private const string HEADER_SEPARATOR = "-";
 		private const int SKIP_HEADER_SEPARATORS = 2;
-		
-		public static StringBuilder CreateAsciiTableFromDataTable(DataTable table)
+
+		public static StringBuilder CreateAsciiTableFromDataTable (DataTable table)
 		{
 			var tableBuilder = new StringBuilder();
 			var lengthByColumn = GetLengthByColumn(table);
@@ -21,7 +21,7 @@ namespace AsciiTableGenerators
 			return tableBuilder;
 		}
 
-		private static Dictionary<int, int> GetLengthByColumn(DataTable table)
+		private static Dictionary<int, int> GetLengthByColumn (DataTable table)
 		{
 			var lengthByColumn = new Dictionary<int, int>();
 
@@ -47,7 +47,7 @@ namespace AsciiTableGenerators
 			return lengthByColumn;
 		}
 
-		private static void AppendColumns(DataTable table, StringBuilder tableBuilder, IReadOnlyDictionary<int, int> lengthByColumn)
+		private static void AppendColumns (DataTable table, StringBuilder tableBuilder, IReadOnlyDictionary<int, int> lengthByColumn)
 		{
 			for (var columnIndex = 0; columnIndex < table.Columns.Count; columnIndex++)
 			{
@@ -61,12 +61,12 @@ namespace AsciiTableGenerators
 			tableBuilder.AppendLine(string.Join("", Enumerable.Repeat(HEADER_SEPARATOR, tableBuilder.Length - SKIP_HEADER_SEPARATORS).ToArray()));
 		}
 
-		private static string ToTitleCase(string columnName)
+		private static string ToTitleCase (string columnName)
 		{
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(columnName.Replace("_", " "));
 		}
 
-		private static void AppendRows(DataTable table, StringBuilder tableBuilder, IReadOnlyDictionary<int, int> lengthByColumn)
+		private static void AppendRows (DataTable table, StringBuilder tableBuilder, IReadOnlyDictionary<int, int> lengthByColumn)
 		{
 			for (var rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
 			{
@@ -81,10 +81,10 @@ namespace AsciiTableGenerators
 			}
 		}
 
-		private static string AlignValueAndAddSeparator(string? value, int columnLength)
+		private static string AlignValueAndAddSeparator (string? value, int columnLength)
 		{
 			var spaces = string.Empty;
-			
+
 			if (value != null)
 			{
 				var remainingSpace = value.Length < columnLength ? columnLength - value.Length : value.Length - columnLength;

@@ -25,7 +25,7 @@ public class VotingManager
 	{
 		VotingThreadsCancellationToken.Cancel();
 		VotingThreadsCancellationToken.Dispose();
-		
+
 		VotingParametersList = votingParametersList;
 		StartVotingThreads();
 	}
@@ -49,7 +49,7 @@ public class VotingManager
 			if (CheckIfNotifyToday() == true)
 			{
 				await Program.BotClient.SendMessage(parameters.guildID, parameters.channelID, string.IsNullOrEmpty(parameters.startMessage) == false ? parameters.startMessage : "Let's order some food");
-				
+
 				try
 				{
 					await Task.Delay(TimeSpan.FromMinutes(parameters.durationInMinutes), cancellationToken);
@@ -58,7 +58,7 @@ public class VotingManager
 				{
 					return;
 				}
-				
+
 				await Program.BotClient.SendMessage(parameters.guildID, parameters.channelID, string.IsNullOrEmpty(parameters.endMessage) == false ? parameters.endMessage : "Food voting was finished");
 
 				try

@@ -7,18 +7,18 @@ public static class BotCommandsDataTablePreparer
 	// TODO same values as in the test class. 13.04.2022. Artem Yurchenko
 	private const string COMMANDS_COLUMN_NAME = "Commands";
 	private const string DESCRIPTION_COLUMN_NAME = "Description";
-	
+
 	public static DataTable GetCommandsDataTable (Dictionary<string, string> commandDescriptionMap)
 	{
 		DataTable commandsTable = new();
 		commandsTable.Columns.Add(COMMANDS_COLUMN_NAME, typeof(string));
-		commandsTable.Columns.Add(DESCRIPTION_COLUMN_NAME, typeof(string));	
-		
+		commandsTable.Columns.Add(DESCRIPTION_COLUMN_NAME, typeof(string));
+
 		foreach ((string? command, string? description) in commandDescriptionMap)
 		{
 			commandsTable.Rows.Add(command, description);
 		}
-		
+
 		return commandsTable;
 	}
 }

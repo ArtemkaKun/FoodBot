@@ -9,7 +9,7 @@ public static class BotCommandsCollector
 {
 	private const string COMMAND_ARGUMENT_NAME_TEMPLATE = " <{0}>";
 	private const string COMMAND_NAME_TEMPLATE = "!{0}";
-	
+
 	public static Dictionary<string, string> GetCommandDescriptionMap ()
 	{
 		IEnumerable<MethodInfo> commandsMethods = GetAllCommandsMethods();
@@ -25,13 +25,13 @@ public static class BotCommandsCollector
 			{
 				fullCommandString += $",{commandArgumentNames}";
 			}
-			
+
 			commandDescriptionMap.Add(fullCommandString, method.GetCustomAttribute<SummaryAttribute>()?.Text ?? string.Empty);
 		}
 
 		return commandDescriptionMap;
 	}
-	
+
 	private static IEnumerable<MethodInfo> GetAllCommandsMethods ()
 	{
 		return Assembly.GetExecutingAssembly()
@@ -40,7 +40,7 @@ public static class BotCommandsCollector
 					   .OrderBy(commandType => commandType.FullName)
 					   .SelectMany(commandsModule => commandsModule.GetMethods().Where(method => method.GetCustomAttribute<CommandAttribute>() != null));
 	}
-	
+
 	private static string GetCommandNameWithAliases (MemberInfo command)
 	{
 		string? commandName = GetCommandName(command);
@@ -62,7 +62,7 @@ public static class BotCommandsCollector
 		if (string.IsNullOrEmpty(commandsGroupName) == false)
 		{
 			string fullCommandName = commandsGroupName;
-			
+
 			if (string.IsNullOrEmpty(commandMethodName) == false)
 			{
 				fullCommandName += $" {commandMethodName}";
@@ -70,7 +70,7 @@ public static class BotCommandsCollector
 
 			return fullCommandName;
 		}
-		
+
 		return commandMethodName;
 	}
 
@@ -78,7 +78,7 @@ public static class BotCommandsCollector
 	{
 		string[]? commandAliases = command.GetCustomAttribute<AliasAttribute>()?.Aliases;
 		string aliasesString = string.Empty;
-		
+
 		for (int aliasPointer = 0; aliasPointer < commandAliases?.Length; aliasPointer++)
 		{
 			aliasesString += string.Format(COMMAND_NAME_TEMPLATE, commandAliases[aliasPointer]);

@@ -6,7 +6,7 @@ public static class VotingCommandsResult
 {
 	public static string? SetVotingStartParameters (ulong guildID, ulong channelID, string startTime, string message)
 	{
-		if (guildID == 0 || channelID == 0 || string.IsNullOrEmpty(startTime) == true|| string.IsNullOrEmpty(message) == true || TimeSpan.TryParse(startTime, out TimeSpan startTimeParsed) == false) // TODO code duplication. 24.04.2022. Artem Yurchenko
+		if (guildID == 0 || channelID == 0 || string.IsNullOrEmpty(startTime) == true || string.IsNullOrEmpty(message) == true || TimeSpan.TryParse(startTime, out TimeSpan startTimeParsed) == false) // TODO code duplication. 24.04.2022. Artem Yurchenko
 		{
 			return "Wrong input parameters";
 		}
@@ -26,7 +26,7 @@ public static class VotingCommandsResult
 		{
 			return "Wrong input parameters";
 		}
-		
+
 		return Program.VotingSystemDB.AddVotingMainParameters(new VotingMainParameters
 		{
 			GuildID = guildID,
@@ -56,16 +56,16 @@ public static class VotingCommandsResult
 		{
 			return (null, "Wrong input parameters");
 		}
-		
+
 		bool startParametersGetResult = Program.VotingSystemDB.TryGetVotingStartParametersByChatIdentifier(guildID, channelID, out VotingStartParameters? startParameters);
 		bool mainParametersGetResult = Program.VotingSystemDB.TryGetVotingMainParametersByChatIdentifier(guildID, channelID, out VotingMainParameters? mainParameters);
 		bool endParametersGetResult = Program.VotingSystemDB.TryGetVotingEndParametersByChatIdentifier(guildID, channelID, out VotingEndParameters? endParameters);
-		
+
 		if (startParametersGetResult == false || mainParametersGetResult == false || endParametersGetResult == false)
 		{
 			return (null, "No voting parameters found");
 		}
-		
+
 		return ($"Start voting at {startParameters?.StartTime} with a message \"{startParameters?.Message}\", voting duration is {mainParameters?.DurationInMinutes} minutes, end message is \"{endParameters?.Message}\"", null);
 	}
 

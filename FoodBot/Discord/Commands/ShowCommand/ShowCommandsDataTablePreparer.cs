@@ -10,19 +10,19 @@ public static class ShowCommandsDataTablePreparer
 	private const string PERSON_COLUMN_NAME = "Person";
 	private const string ORDER_COLUMN_NAME = "Order";
 	private const string COUNT_COLUMN_NAME = "Count";
-	
+
 	public static DataTable GetOrdersDataTable (List<Order> orders)
 	{
 		DataTable ordersTable = new();
 		ordersTable.Columns.Add(ID_COLUMN_NAME, typeof(uint));
 		ordersTable.Columns.Add(PERSON_COLUMN_NAME, typeof(string));
 		ordersTable.Columns.Add(ORDER_COLUMN_NAME, typeof(string));
-		
+
 		foreach (Order order in orders)
 		{
 			ordersTable.Rows.Add(order.ID, order.PersonName, order.Text);
 		}
-		
+
 		return ordersTable;
 	}
 
