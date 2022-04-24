@@ -53,4 +53,32 @@ public class VotingCommandsResultTests
 		string? errorMessage = VotingCommandsResult.SetVotingStartParameters(1, 1, "10:00", "");
 		Assert.IsNotNull(errorMessage);
 	}
+	
+	[Test, NonParallelizable]
+	public void SetVotingMainParameters_Success_True ()
+	{
+		string? errorMessage = VotingCommandsResult.SetVotingMainParameters(1, 1, 10);
+		Assert.IsNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void SetVotingMainParametersWithInvalidGuidID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.SetVotingMainParameters(0, 1, 10);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void SetVotingMainParametersWithInvalidChannelID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.SetVotingMainParameters(1, 0, 10);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void SetVotingMainParametersWithInvalidTime_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.SetVotingMainParameters(1, 1, 0);
+		Assert.IsNotNull(errorMessage);
+	}
 }
