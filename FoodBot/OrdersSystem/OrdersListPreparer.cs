@@ -25,6 +25,6 @@ public static class OrdersListPreparer
 			}
 		}
 		
-		return countedOrders;
+		return countedOrders.OrderByDescending(orderCount => orderCount.Value).ToDictionary(orderCount => orderCount.Key, orderCount => orderCount.Value);
 	}
 }
