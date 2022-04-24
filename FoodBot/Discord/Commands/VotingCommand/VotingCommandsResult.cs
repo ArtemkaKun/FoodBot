@@ -78,4 +78,14 @@ public static class VotingCommandsResult
 
 		return Program.VotingSystemDB.RemoveVotingStartParametersByChatIdentifier(guildID, channelID);
 	}
+
+	public static string? RemoveVotingMainParameters (ulong guildID, ulong channelID)
+	{
+		if (guildID == 0 || channelID == 0) // TODO code duplication. 24.04.2022. Artem Yurchenko
+		{
+			return "Wrong input parameters";
+		}
+
+		return Program.VotingSystemDB.RemoveVotingMainParametersByChatIdentifier(guildID, channelID);
+	}
 }

@@ -170,4 +170,34 @@ public class VotingCommandsResultTests
 		string? errorMessage = VotingCommandsResult.RemoveVotingStartParameters(1, 1);
 		Assert.IsNotNull(errorMessage);
 	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingMainParameters_Success_True ()
+	{
+		VotingCommandsResult.SetVotingMainParameters(1, 1, 10);
+		string? errorMessage = VotingCommandsResult.RemoveVotingMainParameters(1, 1);
+		Assert.IsNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingMainParametersWithInvalidGuidID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingMainParameters(0, 1);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveVotingMainParametersWithInvalidChannelID_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingMainParameters(1, 0);
+		Assert.IsNotNull(errorMessage);
+	}
+	
+	[Test, NonParallelizable]
+	public void RemoveInexistentVotingMainParameters_Success_False ()
+	{
+		string? errorMessage = VotingCommandsResult.RemoveVotingMainParameters(1, 1);
+		Assert.IsNotNull(errorMessage);
+	}
+	
 }
