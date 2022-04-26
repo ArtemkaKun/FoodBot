@@ -63,7 +63,7 @@ public class VotingManager
 
 				try
 				{
-					await Task.Delay(new TimeSpan(24, 0, 0), cancellationToken);
+					await Task.Delay(DateTime.Today.Subtract(DateTime.Now.TimeOfDay).TimeOfDay + parameters.startTime, cancellationToken); // TODO Duplication of logic in 35-36 lines. 26.04.2022. Artem Yurchenko
 				}
 				catch (TaskCanceledException)
 				{
