@@ -32,12 +32,10 @@ public class VotingManager
 
 	private async Task DoVotingProcess (VotingParameters parameters, CancellationToken cancellationToken)
 	{
-		TimeSpan currentTime = DateTime.Now.TimeOfDay;
-		TimeSpan timeToWait = currentTime < parameters.startTime ? parameters.startTime.Subtract(currentTime) : DateTime.Today.Subtract(currentTime).TimeOfDay + parameters.startTime;
-
+		// TODO Duplicated block of try-catch code. 26.04.2022. Artem Yurchenko
 		try
 		{
-			await Task.Delay(timeToWait, cancellationToken);
+			await WaitUntilStartTime(parameters.startTime, cancellationToken);
 		}
 		catch (TaskCanceledException)
 		{
@@ -61,9 +59,22 @@ public class VotingManager
 
 				await Program.BotClient.SendMessage(parameters.guildID, parameters.channelID, string.IsNullOrEmpty(parameters.endMessage) == false ? parameters.endMessage : "Food voting was finished");
 
+				// TODO Duplicated block of try-catch code. 26.04.2022. Artem Yurchenko
 				try
 				{
-					await Task.Delay(DateTime.Today.Subtract(DateTime.Now.TimeOfDay).TimeOfDay + parameters.startTime, cancellationToken); // TODO Duplication of logic in 35-36 lines. 26.04.2022. Artem Yurchenko
+					await WaitUntilStartTime(parameters.startTime, cancellationToken);
+				}
+				catch (TaskCanceledException)
+				{
+					return;
+				}
+			}
+			else
+			{
+				// TODO Duplicated block of try-catch code. 26.04.2022. Artem Yurchenko
+				try
+				{
+					await WaitUntilStartTime(parameters.startTime, cancellationToken);
 				}
 				catch (TaskCanceledException)
 				{
@@ -71,6 +82,14 @@ public class VotingManager
 				}
 			}
 		}
+	}
+
+	private static async Task WaitUntilStartTime (TimeSpan startTime, CancellationToken cancellationToken)
+	{
+		TimeSpan currentTime = DateTime.Now.TimeOfDay;
+		TimeSpan timeToWait = currentTime < startTime ? startTime.Subtract(currentTime) : DateTime.Today.Subtract(currentTime).TimeOfDay + startTime;
+
+		await Task.Delay(timeToWait, cancellationToken);
 	}
 
 	private bool CheckIfNotifyToday ()
